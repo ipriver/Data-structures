@@ -1,0 +1,19 @@
+{
+  "name": "jsjsjs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "i.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.3.0"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "",
+  "license": "ISC"
+}
