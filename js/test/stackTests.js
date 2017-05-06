@@ -55,6 +55,7 @@ describe('Stack tests', () => {
       assert.equal(stack.stack.length, maxLength);
     });
   });
+
   describe('#removeElement', () => {
     let maxLength = 5;
     it('check if last element was deleted', () => {
@@ -85,41 +86,43 @@ describe('Stack tests', () => {
       assert.deepEqual(stack.stack, []);
       assert.equal(stack.stack.length, 0);
     });
-    describe('#clear', () => {
-      it('check that clear clears all stack', () => {
-        let stack = new Stack(10);
-        for (let i=0; i < maxLength; i+=1) {
-          stack.add(i);
-        }
-        stack.clear();
-        assert.equal(stack.stack.length, 0);
-      });
+  });
+
+  describe('#clear', () => {
+    it('check that clear clears all stack', () => {
+      let stack = new Stack(10);
+      for (let i=0; i < maxLength; i+=1) {
+        stack.add(i);
+      }
+      stack.clear();
+      assert.equal(stack.stack.length, 0);
     });
-    describe('#chains', () => {
-      it('Test add.removeElement chain', () => {
-        let stack = new Stack(10);
-        stack.add(1).removeElement();
-        assert.deepEqual(stack.stack, []);
-        stack.add(1).add(1).add(2).add(2).removeElement().removeElement();
-        assert.deepEqual(stack.stack, [1,1]);
-        stack.clear();
-        stack.add(2).add(3).add(4);
-        assert.deepEqual(stack.stack, [2,3,4]);
-      });
-      it('Test clear chain', () => {
-        let stack = new Stack(10);
-        stack.add(2).add(3).add(4).clear().add(2);
-        assert.deepEqual(stack.stack, [2]);
-        stack = new Stack(10);
-        stack.add(2).add(3).add(4).clear().add(2).clear().clear();
-        assert.deepEqual(stack.stack, []);
-      });
-      it('Test chain from the begining of object creation', () => {
-        let stack = new Stack(10).add(1).add(2).add(3);
-        assert.deepEqual(stack.stack, [1,2,3]);
-        stack = new Stack(10).add(1).removeElement().add(2).add(3).clear();
-        assert.deepEqual(stack.stack, []);
-      });
+  });
+  
+  describe('#chains', () => {
+    it('Test add.removeElement chain', () => {
+      let stack = new Stack(10);
+      stack.add(1).removeElement();
+      assert.deepEqual(stack.stack, []);
+      stack.add(1).add(1).add(2).add(2).removeElement().removeElement();
+      assert.deepEqual(stack.stack, [1,1]);
+      stack.clear();
+      stack.add(2).add(3).add(4);
+      assert.deepEqual(stack.stack, [2,3,4]);
+    });
+    it('Test clear chain', () => {
+      let stack = new Stack(10);
+      stack.add(2).add(3).add(4).clear().add(2);
+      assert.deepEqual(stack.stack, [2]);
+      stack = new Stack(10);
+      stack.add(2).add(3).add(4).clear().add(2).clear().clear();
+      assert.deepEqual(stack.stack, []);
+    });
+    it('Test chain from the begining of object creation', () => {
+      let stack = new Stack(10).add(1).add(2).add(3);
+      assert.deepEqual(stack.stack, [1,2,3]);
+      stack = new Stack(10).add(1).removeElement().add(2).add(3).clear();
+      assert.deepEqual(stack.stack, []);
     });
   });
 });
