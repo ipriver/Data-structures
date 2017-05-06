@@ -90,7 +90,8 @@ describe('Stack tests', () => {
 
   describe('#clear', () => {
     it('check that clear clears all stack', () => {
-      let stack = new Stack(10);
+      let maxLength = 10;
+      let stack = new Stack(maxLength);
       for (let i=0; i < maxLength; i+=1) {
         stack.add(i);
       }
@@ -98,7 +99,7 @@ describe('Stack tests', () => {
       assert.equal(stack.stack.length, 0);
     });
   });
-  
+
   describe('#chains', () => {
     it('Test add.removeElement chain', () => {
       let stack = new Stack(10);
