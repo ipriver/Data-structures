@@ -15,13 +15,17 @@ function Queue(maxLength=0) {
       console.log('Queue is full now');
       //throw new MyException('Queue is full now');
     }
+    return this;
   }
   this.remove = function() {
     this.queue.pop(0);
+    return this;
   }
   this.clean = function() {
     this.queue.length = 0;
+    return this;
   };
+  return this;
 };
 
 

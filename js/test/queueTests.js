@@ -13,6 +13,9 @@ describe('Queue Tests', () => {
     it('check Queue properties', () => {
       assert.property(queue, 'queue');
       assert.property(queue, 'add');
+      assert.property(queue, 'remove');
+      assert.property(queue, 'clean');
+      assert.property(queue, 'maxLength');
 
     });
     it('queue maxLength default value = 0 if it is not provided', () => {
@@ -89,6 +92,34 @@ describe('Queue Tests', () => {
       }
       queue.clean();
       assert.equal(queue.queue.length, 0);
+    });
+  });
+
+  describe('#chains', () => {
+    it('Test add remove chains', () => {
+      let maxLength = 10;
+      let queue = new Queue(maxLength);
+      queue.add(2).add(3).add(4).remove();
+      assert.deepEqual(queue.queue, [2,3]);
+      queue = new Queue(maxLength);
+      queue.add(2).add(3).add(4).remove().remove().add(9);
+      assert.deepEqual(queue.queue, [2,9]);
+    });
+    it('test clear chains', () => {
+      let maxLength = 10;
+      let queue = new Queue(maxLength);
+      queue.add(2).add(3).add(4).remove().clean();
+      assert.deepEqual(queue.queue, []);
+      queue = new Queue(maxLength);
+      queue.add(2).add(3).add(4).remove().clean().add(2).add(2);
+      assert.deepEqual(queue.queue, [2,2]);
+    });
+    it('test chain constructor', () => {
+      let maxLength = 10;
+      let queue = new Queue(maxLength).add(2).add(3).add(4).remove();
+      assert.deepEqual(queue.queue, [2,3]);
+      queue = new Queue(maxLength).add(2).add(3).add(4).remove().clean().add(2).add(2);
+      assert.deepEqual(queue.queue, [2,2]);
     });
   });
 });
