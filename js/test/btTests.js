@@ -97,4 +97,44 @@ describe('BinaryTree', function() {
       assert.equal(bt.getMax(), max);
     });
   });
+  describe('#countElements', function() {
+    it('return 0 for empty BT', function() {
+      const bt = new BinTree();
+      assert.equal(bt.countElements(), 0);
+    });
+    it('test if count function counts correctly', function() {
+      const bt = new BinTree();
+      let times = Math.floor(Math.random() * (15 - 1 + 1)) + 1 
+      for (let i=5; i < times+5; i+=1) {
+        bt.addNode(new Node(Math.floor(Math.random() * (15 - 1 + 1)) + 1 ));
+      }
+      console.log(times);
+      assert.equal(bt.countElements(), times + 5);
+    });
+  });
+  describe('#searchNodeByItsValue', function() {
+    const bt = new BinTree();
+    it('throw an error if search value is empty', function() {
+      expect(() => bt.searchNodeByItsValue(4)).to.throw(MyException);
+    });
+    it('throw an error if BT is empty', function() {
+      expect(() => bt.searchNodeByItsValue()).to.throw(MyException);
+    });
+    it('check if it works correctly', function() {
+      const bt = new BinTree();
+      let searchNode = new Node(1);
+      bt.addNode(new Node(5));
+      bt.addNode(new Node(3));
+      bt.addNode(new Node(9));
+      bt.addNode(new Node(1));
+      bt.addNode(new Node(4));
+      assert.deepEqual(bt.searchNodeByItsValue(1).value, searchNode.value);
+      assert.equal(bt.searchNodeByItsValue(24), 'Not found');
+      assert.deepEqual(bt.searchNodeByItsValue(9).value, 9);
+
+      parent = bt.searchNodeByItsValue(3);
+      assert.equal(parent.left, bt.searchNodeByItsValue(1));
+      assert.equal(parent.right, bt.searchNodeByItsValue(4));
+    });
+  });
 });
