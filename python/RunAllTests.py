@@ -1,4 +1,6 @@
-from test.queueTests import TestQueue 
+from test.queueTests import TestQueue
+from test.stackTests import TestStack 
 import unittest
 
-unittest.main()
+if __name__ == '__main__':
+    unittest.main()

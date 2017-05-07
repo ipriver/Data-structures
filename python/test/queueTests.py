@@ -122,3 +122,6 @@ class TestQueue(unittest.TestCase):
         queue = Queue(self.max_length).add(1).add(2).add(3).remove().remove()
         self.assertEqual(queue.queue, [3])
         self.assertEqual(len(queue.queue), 1)
+
+if __name__ == '__main__':
+    unittest.main()
