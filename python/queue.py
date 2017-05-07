@@ -1,5 +1,7 @@
 class Queue:
     def __init__(self, max_length=0):
+        if type(max_length) != int or max_length < 0:
+            raise Exception
         self.max_length = max_length
         self.queue = []
 
@@ -20,3 +22,4 @@ class Queue:
     def clear(self):
         self.queue = []
         return self
+

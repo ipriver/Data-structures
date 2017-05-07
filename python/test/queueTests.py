@@ -33,7 +33,10 @@ class TestQueue(unittest.TestCase):
             self.assertEqual(queue.max_length, i)
     
     def test_incorrect_maxLength_values(self):
-        pass    
+        lst = [-1, [], None, 'sdfsds', {'obj': 'sdfs'}, 1.1];
+        for i in lst:            
+            with self.assertRaises(Exception):
+                queue = Queue(i)
 
     def test_queue_add_elements(self):
         queue = Queue(self.max_length)
