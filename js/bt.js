@@ -13,7 +13,7 @@ function Node(value) {
 
 function BinTree() {
   this.root = null;
-};
+}
 
 BinTree.prototype.addNode = function(node) {
   if (!(node instanceof Node)) throw new MyException('Not a Node');
@@ -42,16 +42,29 @@ BinTree.prototype.addNode = function(node) {
   return this;
 };
 
-BinTree.prototype.countElements = function(currentNode) {
+BinTree.prototype.countElements = function count(currentNode=this.root) {
   if (!this.root) return 0;
-  if (!currentNode) currentNode = this.root;
-  
+  if (!currentNode.left && !currentNode.right) return 1;
+  if (currentNode.left && currentNode.right) {
+    return 1 + count(currentNode.left) + count(currentNode.right);
+  } else if (currentNode.left) {
+    return 1 + count(currentNode.left);
+  } else {
+    return 1 + count(currentNode.right);
+  }
 };
 
-BinTree.prototype.countValuesSum = function() {
+BinTree.prototype.countValuesSum = function countSum(currentNode=this.root) {
   if (!this.root) return 0;
-
-}
+  if (!currentNode.left && !currentNode.right) return currentNode.value;
+  if (currentNode.left && currentNode.right) {
+    return currentNode.value + countSum(currentNode.left) + countSum(currentNode.right);
+  } else if (currentNode.left) {
+    return currentNode.value + countSum(currentNode.left);
+  } else {
+    return currentNode.value + countSum(currentNode.right);
+  }
+};
 
 BinTree.prototype.getMin = function() {
   if (!this.root) throw new MyException('No elements in BT');
@@ -72,17 +85,17 @@ BinTree.prototype.getMax = function() {
 };
 
 BinTree.prototype.searchNodeByItsValue = function(searchValue) {
-  if (!searchValue) throw new MyException('No search value')
+  if (!searchValue) throw new MyException('No search value');
   if (!this.root) throw new MyException('No elements in BT');
   let currentNode = this.root;
   while (currentNode) {
     if (currentNode.value == searchValue) return currentNode;
     else {
-      if (currentNode.left != null && currentNode.value >= searchValue) {
+      if (currentNode.left !== null && currentNode.value >= searchValue) {
         currentNode = currentNode.left;
         continue;
       }
-      else if (currentNode.right != null && currentNode.value <= searchValue) {
+      else if (currentNode.right !== null && currentNode.value <= searchValue) {
         currentNode = currentNode.right;
         continue;
       } else {
@@ -90,11 +103,10 @@ BinTree.prototype.searchNodeByItsValue = function(searchValue) {
       }
     }
   }
-
 };
 
 module.exports = {
   BinTree: BinTree,
   Node: Node,
   MyException: MyException
-}
+};

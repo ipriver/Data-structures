@@ -103,13 +103,53 @@ describe('BinaryTree', function() {
       assert.equal(bt.countElements(), 0);
     });
     it('test if count function counts correctly', function() {
-      const bt = new BinTree();
-      let times = Math.floor(Math.random() * (15 - 1 + 1)) + 1 
+      let bt = new BinTree();
+      bt.addNode(new Node(20));
+      bt.addNode(new Node(30));
+      bt.addNode(new Node(29));
+      bt.addNode(new Node(10));
+      bt.addNode(new Node(14));
+      bt.addNode(new Node(44));
+      bt.addNode(new Node(10));
+      bt.addNode(new Node(18));
+      bt.addNode(new Node(1));
+      bt.addNode(new Node(9));
+      bt.addNode(new Node(12));
+      assert.equal(bt.countElements(), 11);
+      bt = new BinTree();
+      let times = Math.floor(Math.random() * (15 - 1 + 1)) + 1;
       for (let i=5; i < times+5; i+=1) {
         bt.addNode(new Node(Math.floor(Math.random() * (15 - 1 + 1)) + 1 ));
       }
+      assert.equal(bt.countElements(), times);
+    });
+  });
+  describe('#countSum by Nodes Values', function() {
+    it('return 0 for empty BT', function() {
+      const bt = new BinTree();
+      assert.equal(bt.countElements(), 0);
+    });
+    it('return sum of the whole BinTree nodes', function() {
+      let bt = new BinTree();
+      bt.addNode(new Node(20));
+      bt.addNode(new Node(30));
+      bt.addNode(new Node(29));
+      bt.addNode(new Node(10));
+      bt.addNode(new Node(1));
+      bt.addNode(new Node(9));
+      bt.addNode(new Node(12));
+      assert.equal(bt.countValuesSum(), 111);
+      bt = new BinTree();
+      let times = Math.floor(Math.random() * (15 - 1 + 1)) + 1;
+      let sum = 0;
+      for (let i=5; i < times+5; i+=1) {
+        let nodeValue = Math.floor(Math.random() * (15 - 1 + 1)) + 1 ;
+        bt.addNode(new Node(nodeValue));
+        sum += nodeValue;
+      }
       console.log(times);
-      assert.equal(bt.countElements(), times + 5);
+      console.log(sum);
+      assert.equal(bt.countValuesSum(), sum);
     });
   });
   describe('#searchNodeByItsValue', function() {
