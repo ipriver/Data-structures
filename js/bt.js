@@ -122,13 +122,14 @@ BinTree.prototype.countHeight = function getHeight(currentNode=this.root) {
 BinTree.prototype.getNodesParent = function(node) {
   let currentNode = this.root;
   while (currentNode) {
-    if (currentNode.left == node || currentNode.right == node) return currentNode;
+    if (currentNode.left && currentNode.left.value == node.value) return currentNode;
+    else if (currentNode.right && currentNode.right.value == node.value) return currentNode;
     else {
-      if (currentNode.left >= node.value) {
+      if (currentNode.left.value >= node.value) {
         currentNode = currentNode.left;
         continue;
       }
-      else if (currentNode.right < node.value) {
+      else if (currentNode.right.value < node.value) {
         currentNode = currentNode.right;
         continue;
       } else {
@@ -137,7 +138,6 @@ BinTree.prototype.getNodesParent = function(node) {
     }
   }
 };
-
 
 BinTree.prototype.isValid = function checkBT(currentNode=this.root) {
   if (!this.root) throw new MyException('Tree has no values');
