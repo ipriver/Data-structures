@@ -147,8 +147,6 @@ describe('BinaryTree', function() {
         bt.addNode(new Node(nodeValue));
         sum += nodeValue;
       }
-      console.log(times);
-      console.log(sum);
       assert.equal(bt.countValuesSum(), sum);
     });
   });
@@ -202,11 +200,39 @@ describe('BinaryTree', function() {
       assert.equal(bt.countWidth(), 64);  
     });
   });
-  describe('#print', function() {
-    const bt = new BinTree();
-    it('see how it looks', function() {
-      bt.addNode(new Node(5)).addNode(new Node(2)).addNode(new Node(7));
-      console.log(bt.print());
+  describe('#isValid', function() {
+    it('throws error if BT has no nodes', function() {
+      const bt = new BinTree();
+      expect(() => bt.isValid.to.throw(MyException));
+    });
+    it('should return true for valid BT', function() {
+      const bt = new BinTree();
+      let times = Math.floor(Math.random() * (15 - 1 + 1)) + 1;
+      for (let i=5; i < times+5; i+=1) {
+        let rand = Math.floor(Math.random() * (15 - 1 + 1)) + 1;        
+        bt.addNode(new Node(rand));
+      }
+      assert.equal(bt.isIsValid(), true);
+    });
+    it('should return false for invalid BT', function() {
+      const bt = new BinTree();
+      let invalid = new Node(7);
+      invalid.left = new Node(888);
+      bt.addNode(new Node(5)).addNode(new Node(2)).addNode(invalid);
+      assert.equal(bt.isIsValid(), false);
+    });
+  });
+  
+  describe('#getNodesParent', function() {
+    it('should work correctly for small BT', function() {
+      const bt = new BinTree();
+      let parent = new Node(5);
+      let search = new Node(3);
+      bt.addNode(new Node(5)).addNode(search).addNode(new Node(4)).addNode(new Node(1));
+      assert.equal(bt.getNodesParent(search).value, parent.value);
+    });
+    it('should work correctly for bit BT', function() {
+
     });
   });
 });

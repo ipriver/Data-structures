@@ -117,20 +117,49 @@ BinTree.prototype.countHeight = function getHeight(currentNode=this.root) {
   } else {
     return 1 + getHeight(currentNode.right);
   }
+}; 
+
+BinTree.prototype.getNodesParent = function(node) {
+  let currentNode = this.root;
+  while (currentNode) {
+    if (currentNode.left == node || currentNode.right == node) return currentNode;
+    else {
+      if (currentNode.left >= node.value) {
+        currentNode = currentNode.left;
+        continue;
+      }
+      else if (currentNode.right < node.value) {
+        currentNode = currentNode.right;
+        continue;
+      } else {
+        return 'Not found';
+      }
+    }
+  }
+};
+
+
+BinTree.prototype.isValid = function checkBT(currentNode=this.root) {
+  if (!this.root) throw new MyException('Tree has no values');
+  if (!currentNode.left && !currentNode.right) return 0;
+  if (currentNode.left && currentNode.right) {
+
+    return currentNode.value >= currentNode.left.value && currentNode.value < currentNode.right.value
+          ? checkBT(currentNode.left) + checkBT(currentNode.right)
+          : -1;
+  } else if (currentNode.left) {
+    return currentNode.value >= currentNode.left.value ? checkBT(currentNode.left) : -1;
+  } else {
+    return currentNode.value < currentNode.right.value ? checkBT(currentNode.right) : -1;
+  }
+};
+
+BinTree.prototype.isIsValid = function() {
+  return this.isValid() < 0 ? false : true;
 };
 
 BinTree.prototype.countWidth = function getWidth() {
-  return Math.pow(2, this.countHeight()-1);
-};
-
-BinTree.prototype.print = function() {
-  let imageMap = '';
-  let rootNode = '   [' + this.root.value + ']\n';
-  rootNode += '  /  \\';
-  let leftNode = '\n[' + this.root.left.value + ']';
-  let rightNode = '   [' + this.root.right.value + ']\n';
-  imageMap = rootNode + leftNode + rightNode;
-  return imageMap;
+  return Math.pow(2, this.countHeight() - 1);
 };
 
 module.exports = {
