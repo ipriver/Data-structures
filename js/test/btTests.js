@@ -177,4 +177,36 @@ describe('BinaryTree', function() {
       assert.equal(parent.right, bt.searchNodeByItsValue(4));
     });
   });
+  describe('#countHeight', function() {
+    it('check height', function() {
+      let bt = new BinTree();
+      bt.addNode(new Node(5)).addNode(new Node(2)).addNode(new Node(7));
+      assert.equal(bt.countHeight(), 2);
+      bt = new BinTree();
+      bt.addNode(new Node(11)).addNode(new Node(8)).addNode(new Node(13)).addNode(new Node(7))
+        .addNode(new Node(9)).addNode(new Node(12)).addNode(new Node(21)).addNode(new Node(17))
+        .addNode(new Node(6)).addNode(new Node(5)).addNode(new Node(4)).addNode(new Node(3));
+      assert.equal(bt.countHeight(), 7);
+    });
+  });
+  describe('#countWidth', function() {
+    let bt = new BinTree();
+    it('width should return correct value', function() {
+      let testHeight = 7;
+      bt.addNode(new Node(5)).addNode(new Node(2)).addNode(new Node(7));
+      assert.equal(bt.countWidth(), 2);
+      bt = new BinTree();
+      bt.addNode(new Node(11)).addNode(new Node(8)).addNode(new Node(13)).addNode(new Node(7))
+        .addNode(new Node(9)).addNode(new Node(12)).addNode(new Node(21)).addNode(new Node(17))
+        .addNode(new Node(6)).addNode(new Node(5)).addNode(new Node(4)).addNode(new Node(3));
+      assert.equal(bt.countWidth(), 64);  
+    });
+  });
+  describe('#print', function() {
+    const bt = new BinTree();
+    it('see how it looks', function() {
+      bt.addNode(new Node(5)).addNode(new Node(2)).addNode(new Node(7));
+      console.log(bt.print());
+    });
+  });
 });

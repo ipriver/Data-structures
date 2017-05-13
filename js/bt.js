@@ -105,6 +105,34 @@ BinTree.prototype.searchNodeByItsValue = function(searchValue) {
   }
 };
 
+BinTree.prototype.countHeight = function getHeight(currentNode=this.root) {
+  if (!this.root) return 0;
+  if (!currentNode.left && !currentNode.right) return 1;
+  if (currentNode.left && currentNode.right) {
+    let left = getHeight(currentNode.left);
+    let right = getHeight(currentNode.right);
+    return left >= right ? 1 + left : 1 + right;
+  } else if (currentNode.left) {
+    return 1 + getHeight(currentNode.left);
+  } else {
+    return 1 + getHeight(currentNode.right);
+  }
+};
+
+BinTree.prototype.countWidth = function getWidth() {
+  return Math.pow(2, this.countHeight()-1);
+};
+
+BinTree.prototype.print = function() {
+  let imageMap = '';
+  let rootNode = '   [' + this.root.value + ']\n';
+  rootNode += '  /  \\';
+  let leftNode = '\n[' + this.root.left.value + ']';
+  let rightNode = '   [' + this.root.right.value + ']\n';
+  imageMap = rootNode + leftNode + rightNode;
+  return imageMap;
+};
+
 module.exports = {
   BinTree: BinTree,
   Node: Node,
