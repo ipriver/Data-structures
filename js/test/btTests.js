@@ -221,8 +221,7 @@ describe('BinaryTree', function() {
       bt.addNode(new Node(5)).addNode(new Node(2)).addNode(invalid);
       assert.equal(bt.isIsValid(), false);
     });
-  });
-  
+  });  
   describe('#getNodesParent', function() {
     it('should work correctly for small BT', function() {
       const bt = new BinTree();
@@ -242,6 +241,65 @@ describe('BinaryTree', function() {
       console.log(bt.getNodesParent(search), 'sssssssssss')
       assert.typeOf(bt.getNodesParent(search), 'object');
       assert.equal(bt.getNodesParent(search).value, parent.value);
+    });
+  });
+  describe('#remove', function() {
+    it('check if root is deleted and length is 0 and root is null', function() {
+      const bt = new BinTree();
+      bt.addNode(new Node(11)).addNode(new Node(8)).addNode(new Node(13)).addNode(new Node(7))
+        .addNode(new Node(9)).addNode(new Node(12)).addNode(new Node(21)).addNode(new Node(17))
+        .addNode(new Node(6)).addNode(new Node(5)).addNode(new Node(4)).addNode(new Node(3));
+      bt.removeNodeByItsValue(11);
+      assert.equal(bt.countElements(), 0);
+    });
+    it('should remove element from BT', function() {
+      const bt = new BinTree();
+      bt.addNode(new Node(5)).addNode(new Node(2)).addNode(new Node(7));
+      assert.equal(bt.countElements(), 3);
+      bt.removeNodeByItsValue(7);
+      assert.equal(bt.countElements(), 2);
+      bt.removeNodeByItsValue(2);
+      assert.equal(bt.countElements(), 1);
+    });
+    it('check that child Nodes wont be deleted with Node', function(){
+      let bt = new BinTree();
+      bt.addNode(new Node(11)).addNode(new Node(8)).addNode(new Node(13)).addNode(new Node(7))
+        .addNode(new Node(9)).addNode(new Node(12)).addNode(new Node(21)).addNode(new Node(17))
+        .addNode(new Node(6)).addNode(new Node(5)).addNode(new Node(4)).addNode(new Node(3));
+      let prevCount = bt.countElements();
+      bt.removeNodeByItsValue(8);
+      assert.equal(bt.countElements(), prevCount - 1);
+    
+      let times = Math.floor(Math.random() * (15 - 1 + 1)) + 1;
+      for (let i=5; i < times+5; i+=1) {
+        var rand = Math.floor(Math.random() * (15 - 1 + 1)) + 1;        
+        bt.addNode(new Node(rand));
+      }
+      assert.equal(bt.countElements(), times + 11);
+      prevCount = bt.countElements();
+      bt.removeNodeByItsValue(rand);
+      assert.equal(bt.countElements(), prevCount - 1);
+    });
+    it('check if BT is valid after deleting Node', function() {
+      let bt = new BinTree();
+      bt.addNode(new Node(11)).addNode(new Node(8)).addNode(new Node(13)).addNode(new Node(7))
+        .addNode(new Node(9)).addNode(new Node(12)).addNode(new Node(21)).addNode(new Node(17))
+        .addNode(new Node(6)).addNode(new Node(5)).addNode(new Node(4)).addNode(new Node(3));
+      let prevCount = bt.countElements();
+      bt.removeNodeByItsValue(8);
+      assert.equal(bt.countElements(), prevCount - 1);
+      assert.equal(bt.isIsValid(), true);
+      
+      let times = Math.floor(Math.random() * (15 - 1 + 1)) + 1;
+      for (let i=5; i < times+5; i+=1) {
+        var rand = Math.floor(Math.random() * (15 - 1 + 1)) + 1;        
+        bt.addNode(new Node(rand));
+      }
+      assert.equal(bt.countElements(), times + 11);
+      prevCount = bt.countElements();
+      bt.removeNodeByItsValue(rand);
+      assert.equal(bt.isIsValid(), true);
+      assert.equal(bt.countElements(), prevCount - 1);
     });
   });
 });
