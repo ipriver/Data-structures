@@ -138,6 +138,25 @@ BinTree.prototype.getNodesParent = function(node) {
     }
   }
 };
+//TODO: FIX remove function and tets, something works incorrectly
+BinTree.prototype.removeNodeByItsValue = function(value) {
+  let removeNode = this.searchNodeByItsValue(value);
+  if (removeNode == this.root) {
+    this.root = null;
+    return this;
+  }
+  let NodeParent = this.getNodesParent(removeNode);
+  let leftChild = removeNode.left;
+  let rightChild = removeNode.right;
+  if (NodeParent.left == removeNode) {
+    NodeParent.left = null;
+  } else {
+    NodeParent.right = null;
+  }
+  if (leftChild) this.addNode(leftChild);
+  if (rightChild) this.addNode(rightChild);
+  return this;
+}; 
 
 BinTree.prototype.isValid = function checkBT(currentNode=this.root) {
   if (!this.root) throw new MyException('Tree has no values');
