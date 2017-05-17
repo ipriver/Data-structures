@@ -65,6 +65,30 @@ LinkedList.prototype.clean = function() {
   return this;
 };
 
+LinkedList.prototype.getNode = function(index) {
+  let node = this.head;
+  if(!node) throw new MyException('Linked List is already empty');
+  if (index > this.length || index < 0) throw new MyException('invalid index input');
+  for (let i = 0; i < index; i += 1) {
+    node = node.next;
+  }
+  return node;
+};
+
+LinkedList.prototype.insertAtIndex = function(index, newNode) {
+  
+};
+
+LinkedList.prototype.deleteAtIndex = function(index) {
+  node = this.getNode(index);
+  if (node.prev) node.prev.next = node.next;
+  if (node.next) node.next.prev = node.prev;
+  this.length -= 1;
+  node.next = null;
+  node.prev = null;
+  node.value = null;
+};
+
 module.exports = {
   Node: Node,
   LinkedList: LinkedList,

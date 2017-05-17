@@ -161,4 +161,77 @@ describe('LinkedList', function(){
       assert.equal(lili.length, 1);
     });
   });
+  describe('#deleteAtIndex', function() {
+    var lili = new LinkedList();
+    var times = Math.floor(Math.random() * (10 - 1 + 1)) + 1;
+    beforeEach(function() {
+      lili = new LinkedList();
+    });
+    it('throw error if LL is empty', function() {
+      expect(() => lili.deleteAtIndex(0)).to.throw(MyException);
+    });
+    it('throw error if index is > then LL length', function() {
+      for (let i = 1; i < times + 1; i+=1) {
+        node = new Node(i);
+        lili.addNode(node);
+        assert.equal(lili.length, i);
+        assert.equal(lili.tail, node);
+      }
+      expect(() => lili.deleteAtIndex(11)).to.throw(MyException);
+    });
+    it('check that function deletes Nodes correctly', function() {
+      lili.addNode(new Node(1)).addNode(new Node(2)).addNode(new Node(5));
+      assert.equal(lili.length, 3);
+      lili.deleteAtIndex(1);
+      assert.equal(lili.length, 2);
+    });
+    it('more improved test with random values', function() {
+      let prevNode = new Node(3);
+      let delNode = new Node(4);
+      let nextNode = new Node(5);
+      for (let i = 1; i < times + 1; i+=1) {
+        var node = new Node(i);
+        lili.addNode(node);
+        assert.equal(lili.length, i);
+        assert.equal(lili.tail, node);
+      }
+      lili.addNode(prevNode).addNode(delNode).addNode(nextNode);
+      assert.equal(lili.length, times + 3);
+      lili.deleteAtIndex(1);
+      assert.equal(lili.length, times + 3 - 1);
+      assert.equal(lili.getNode(times).next.value, nextNode.value);
+    });
+  });
+  describe('#getNode', function() {
+    var lili = new LinkedList();
+    var times = Math.floor(Math.random() * (10 - 1 + 1)) + 1;
+    beforeEach(function() {
+      lili = new LinkedList();
+    });
+    it('throw error if LL is empty', function() {
+      expect(() => lili.getNode(0)).to.throw(MyException);
+    });
+    it('throw error if index is > then LL length', function() {
+      for (let i = 1; i < times + 1; i+=1) {
+        var node = new Node(i);
+        lili.addNode(node);
+        assert.equal(lili.length, i);
+        assert.equal(lili.tail, node);
+      }
+      expect(() => lili.getNode(11)).to.throw(MyException);
+    });
+    it('should return valid Node by it\'s index', function() {
+      let searchNode = new Node(99);
+      lili.addNode(new Node(1)).addNode(new Node(2)).addNode(searchNode).addNode(new Node(5));
+      assert.equal(lili.getNode(2), searchNode);
+      lili = new LinkedList();
+      for (let i = 1; i < times + 1; i+=1) {
+        var node = new Node(i);
+        lili.addNode(node);
+        assert.equal(lili.length, i);
+        assert.equal(lili.tail, node);
+      }
+      assert.equal(lili.getNode(times-1), node);
+    });
+  });
 });
