@@ -37,12 +37,10 @@ describe('LinkedList', function(){
   });
   describe('#addNode', function() {
     var lili = new LinkedList();
-    times = Math.floor(Math.random() * (30 - 15 + 1)) + 15;
-    
+    var times = Math.floor(Math.random() * (30 - 15 + 1)) + 15;
     beforeEach(function() {
       lili = new LinkedList();
     });
-
     it('addNode should correctly add Node into the list', function() {
       node = new Node(3);
       lili.addNode(node);
@@ -66,6 +64,57 @@ describe('LinkedList', function(){
       assert.equal(lili.length, 2);
       lili.addNode(new Node(3)).addNode(new Node(44));
       assert.equal(lili.length, 4);
+    });
+  });
+  describe('#removeLast', function() {
+    var lili = new LinkedList();
+    var times = Math.floor(Math.random() * (30 - 15 + 1)) + 15;
+    beforeEach(function() {
+      lili = new LinkedList();
+    });
+    it('throws error if LL is empty', function() {
+      expect(() => lili.removeLast()).to.throw(MyException);
+    });
+    it('check that it removes element from LL and throws exception on empty LL', function() {
+      lili.addNode(new Node(1));
+      assert.equal(lili.length, 1, 'length should be 1')
+      lili.removeLast();
+      assert.equal(lili.length, 0, 'length should be 0');
+      assert.equal(lili.head, null);
+      expect(() => lili.removeLast()).to.throw(MyException);
+    });
+    it('more random values to remove', function() {
+      for (let i = 1; i < times + 1; i+=1) {
+        node = new Node(i);
+        lili.addNode(node);
+        assert.equal(lili.length, i);
+        assert.equal(lili.tail, node);
+      }
+      for (let i = times; i > 1; i-=1) {
+        expect(() => lili.removeLast()).not.to.throw(MyException);
+        assert.equal(lili.length, i-1);
+        assert.notEqual(lili.tail, null);
+      }
+      assert.equal(lili.length, 1);
+      expect(() => lili.removeLast()).not.to.throw(MyException);
+      assert.equal(lili.length, 0);
+      assert.equal(lili.tail, null);
+      expect(() => lili.removeLast()).to.throw(MyException);
+    });
+    it('remove should be chainable', function() {
+      lili.addNode(new Node(1));
+      lili.addNode(new Node(2));
+      lili.removeLast().removeLast();
+      assert.equal(lili.length, 0);
+      assert.equal(lili.tail, null);
+      let lastNode = new Node(99);
+      lili.addNode(new Node(1)).addNode(new Node(2)).removeLast()
+          .addNode(new Node(1)).addNode(new Node(1)).removeLast()
+          .addNode(new Node(1)).removeLast().removeLast()
+          .addNode(lastNode).addNode(new Node(1)).addNode(new Node(1))
+          .removeLast().removeLast();
+      assert.equal(lili.tail, lastNode);
+      assert.equal(lili.length, 2);
     });
   });
 });
