@@ -65,18 +65,34 @@ LinkedList.prototype.clean = function() {
   return this;
 };
 
-LinkedList.prototype.getNode = function(index) {
+LinkedList.prototype.getNode = function(index, notSkip=true) {
   let node = this.head;
-  if(!node) throw new MyException('Linked List is already empty');
+  if(notSkip && !node) throw new MyException('Linked List is already empty');
   if (index > this.length || index < 0) throw new MyException('invalid index input');
   for (let i = 0; i < index; i += 1) {
     node = node.next;
   }
+
   return node;
 };
 
 LinkedList.prototype.insertAtIndex = function(index, newNode) {
-  
+  if (!(newNode instanceof Node)) throw new MyException('input is not a Node');
+  node = this.getNode(index, false);
+  if (node == null) {
+    this.addNode(newNode);
+    return this;
+  } else if (this.head == node) {
+    newNode.next = node;
+    node.prev = newNode;
+    this.head = newNode;
+  } else {
+    node.prev.next = newNode;
+    node.prev = newNode;
+    newNode.next = node;
+  }
+  this.length += 1;
+  return this;
 };
 
 LinkedList.prototype.deleteAtIndex = function(index) {
@@ -87,6 +103,7 @@ LinkedList.prototype.deleteAtIndex = function(index) {
   node.next = null;
   node.prev = null;
   node.value = null;
+  return this;
 };
 
 module.exports = {

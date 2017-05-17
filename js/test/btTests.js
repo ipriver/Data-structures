@@ -238,7 +238,6 @@ describe('BinaryTree', function() {
       bt.addNode(new Node(11)).addNode(new Node(8)).addNode(new Node(13)).addNode(new Node(7))
         .addNode(new Node(9)).addNode(new Node(12)).addNode(new Node(21)).addNode(new Node(17))
         .addNode(new Node(6)).addNode(new Node(5)).addNode(new Node(4)).addNode(new Node(3));
-      console.log(bt.getNodesParent(search), 'sssssssssss')
       assert.typeOf(bt.getNodesParent(search), 'object');
       assert.equal(bt.getNodesParent(search).value, parent.value);
     });

@@ -234,4 +234,38 @@ describe('LinkedList', function(){
       assert.equal(lili.getNode(times-1), node);
     });
   });
+  describe('#insertAt', function() {
+    var lili = new LinkedList();
+    var times = Math.floor(Math.random() * (10 - 1 + 1)) + 1;
+    beforeEach(function() {
+      lili = new LinkedList();
+    });
+    it('throw exception if function argument is not a Node instance', function() {
+      expect(() => lili.insertAtIndex(0, 23)).to.throw(MyException);
+    });
+    it('throw error if index is > then LL length', function() {
+      for (let i = 1; i < times + 1; i+=1) {
+        var node = new Node(i);
+        lili.addNode(node);
+        assert.equal(lili.length, i);
+        assert.equal(lili.tail, node);
+      }
+      expect(() => lili.insertAtIndex(11, new Node(22))).to.throw(MyException);
+    });
+    it('should work for empty LL if index is 0', function() {
+      assert.equal(lili.length, 0);
+      expect(() => lili.insertAtIndex(0, new Node(22))).not.to.throw(MyException);
+      assert.equal(lili.head.value, 22);
+      assert.equal(lili.length, 1);
+    });
+    it('should insert Node at correct index', function() {
+      lili.addNode(new Node(1)).addNode(new Node(2)).addNode(new Node(3));
+      lili.insertAtIndex(1, new Node(99));
+    });
+    it('should be a chainable function', function() {
+      lili.addNode(new Node(1)).addNode(new Node(2)).insertAtIndex(1, new Node(99))
+          .addNode(new Node(22)).insertAtIndex(3, new Node(32));
+      assert.equal(lili.length, 5);
+    });
+  });
 });
