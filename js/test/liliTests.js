@@ -117,4 +117,48 @@ describe('LinkedList', function(){
       assert.equal(lili.length, 2);
     });
   });
+  describe('#clean', function() {
+    var lili = new LinkedList();
+    var times = Math.floor(Math.random() * (30 - 15 + 1)) + 15;
+    beforeEach(function() {
+      lili = new LinkedList();
+    });
+    it('throws error if LL is empty', function() {
+      expect(() => lili.clean()).to.throw(MyException);
+    });
+    it('should clean LL correctyle', function() {
+      lili.addNode(new Node(1));
+      lili.addNode(new Node(2));
+      lili.clean();
+      assert.equal(lili.length, 0);
+      assert.equal(lili.head, null);
+      assert.equal(lili.tail, null);
+    });
+    it('test clean with more values', function() {
+      for (let i = 0; i < 5; i += 1) {
+        for (let j = 1; j < times + 1; j += 1) {
+          node = new Node(j);
+          lili.addNode(node);
+          assert.equal(lili.length, j);
+          assert.equal(lili.tail, node);
+        }
+        lili.clean();
+        assert.equal(lili.length, 0);
+        assert.equal(lili.head, null);
+        assert.equal(lili.tail, null);
+      }
+    });
+    it('clean must be chainable', function() {
+      lili.addNode(new Node(1));
+      lili.addNode(new Node(2)).clean();
+      assert.equal(lili.length, 0);
+      assert.equal(lili.head, null);
+      assert.equal(lili.tail, null);
+      let lastNode = new Node(99);
+      lili.addNode(new Node(1)).addNode(new Node(2)).addNode(new Node(3))
+          .clean().addNode(lastNode);
+      assert.equal(lili.tail, lastNode);
+      assert.equal(lili.length, 1);
+    });
+  });
 });

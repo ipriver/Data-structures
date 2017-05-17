@@ -45,6 +45,26 @@ LinkedList.prototype.removeLast = function() {
   return this;
 };
 
+LinkedList.prototype.clean = function() {
+  let node = this.tail;
+  if(!node) throw new MyException('Linked List is already empty');
+  function recursiveRm(node) {
+    if (node.next) node.next.prev = null;
+    node.next = null;
+    node.value = null;
+    this.length -= 1;
+    if (!node.prev) {
+      node.value = null;
+      return 0;
+    }
+    return recursiveRm.call(this, node.prev);
+  }
+  recursiveRm.call(this, node);
+  this.head = null;
+  this.tail = null;
+  return this;
+};
+
 module.exports = {
   Node: Node,
   LinkedList: LinkedList,
