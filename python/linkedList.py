@@ -12,6 +12,8 @@ class LinkedList:
         self.tail = None
 
     def add_node(self, node):
+        if not isinstance(node, Node):
+            raise 'input value is not a Node'
         self.length += 1
         if not self.head:
             self.head = node
@@ -38,10 +40,33 @@ class LinkedList:
         return self
 
     def clean(self):
-        pass
+        def recursiveRm(self, node):
+            if node.next:
+                node.next.prev = None
+            node.next = None
+            node.value = None
+            self.length -= 1
+            if not node.prev:
+                node.value = None
+                return 0
+            return recursiveRm(self, node.prev)
+        node = self.tail
+        if not node:
+            raise 'Linked List is already empty'
+        recursiveRm(self, node)
+        self.head = None
+        self.tail = None
+        return self
 
-    def get_node(self):
-        pass
+    def get_node(self, index, notSkip=True):
+        node = self.head
+        if notSkip and not node:
+            raise 'Linked List is already empty'
+        if index > self.length or index < 0:
+            raise 'invalid index input'
+        for i in range(index):
+            node = node.next
+        return node
 
     def insert_at_index(self):
         pass
