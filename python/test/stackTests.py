@@ -1,8 +1,9 @@
 import unittest
 import os
-parentdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-os.sys.path.insert(0,parentdir)
 from stack import Stack
+parentdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+os.sys.path.insert(0, parentdir)
+
 
 class TestStack(unittest.TestCase):
     def setUp(self):
@@ -30,10 +31,10 @@ class TestStack(unittest.TestCase):
         for i in lst:
             stack = Stack(i)
             self.assertEqual(stack.max_length, i)
-    
+
     def test_incorrect_maxLength_values(self):
-        lst = [-1, [], None, 'sdfsds', {'obj': 'sdfs'}, 1.1];
-        for i in lst:            
+        lst = [-1, [], None, 'sdfsds', {'obj': 'sdfs'}, 1.1]
+        for i in lst:
             with self.assertRaises(Exception):
                 stack = Stack(i)
 
@@ -43,10 +44,10 @@ class TestStack(unittest.TestCase):
         self.assertEqual(stack.stack, [4])
         self.assertEqual(len(stack.stack), 1)
         stack.add(3)
-        self.assertEqual(stack.stack, [4,3])
+        self.assertEqual(stack.stack, [4, 3])
         self.assertEqual(len(stack.stack), 2)
-        stack.add([1,1])
-        self.assertEqual(stack.stack, [4,3,[1,1]])
+        stack.add([1, 1])
+        self.assertEqual(stack.stack, [4, 3, [1, 1]])
         self.assertEqual(len(stack.stack), 3)
 
     def test_stack_add_more_values_than_maxLength(self):
@@ -60,10 +61,10 @@ class TestStack(unittest.TestCase):
         stack.add(1)
         stack.add(2)
         stack.add(3)
-        self.assertEqual(stack.stack, [1,2,3])
+        self.assertEqual(stack.stack, [1, 2, 3])
         self.assertEqual(len(stack.stack), 3)
         stack.remove()
-        self.assertEqual(stack.stack, [1,2])
+        self.assertEqual(stack.stack, [1, 2])
         self.assertEqual(len(stack.stack), 2)
         stack.remove()
         self.assertEqual(stack.stack, [1])
@@ -98,7 +99,7 @@ class TestStack(unittest.TestCase):
     def test_chian_add(self):
         stack = Stack(self.max_length)
         stack.add(1).add(2).add(3)
-        self.assertEqual(stack.stack, [1,2,3])
+        self.assertEqual(stack.stack, [1, 2, 3])
         self.assertEqual(len(stack.stack), 3)
 
     def test_chain_remove(self):

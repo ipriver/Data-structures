@@ -22,4 +22,3 @@ class Queue:
     def clear(self):
         self.queue = []
         return self
-

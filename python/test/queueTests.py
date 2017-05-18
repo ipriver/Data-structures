@@ -1,8 +1,8 @@
 import unittest
 import os
+from queue import Queue
 parentdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-os.sys.path.insert(0,parentdir)
-from queue import Queue 
+os.sys.path.insert(0, parentdir)
 
 
 class TestQueue(unittest.TestCase):
@@ -31,10 +31,10 @@ class TestQueue(unittest.TestCase):
         for i in lst:
             queue = Queue(i)
             self.assertEqual(queue.max_length, i)
-    
+
     def test_incorrect_maxLength_values(self):
-        lst = [-1, [], None, 'sdfsds', {'obj': 'sdfs'}, 1.1];
-        for i in lst:            
+        lst = [-1, [], None, 'sdfsds', {'obj': 'sdfs'}, 1.1]
+        for i in lst:
             with self.assertRaises(Exception):
                 queue = Queue(i)
 
@@ -44,10 +44,10 @@ class TestQueue(unittest.TestCase):
         self.assertEqual(queue.queue, [4])
         self.assertEqual(len(queue.queue), 1)
         queue.add(3)
-        self.assertEqual(queue.queue, [4,3])
+        self.assertEqual(queue.queue, [4, 3])
         self.assertEqual(len(queue.queue), 2)
-        queue.add([1,1])
-        self.assertEqual(queue.queue, [4,3,[1,1]])
+        queue.add([1, 1])
+        self.assertEqual(queue.queue, [4, 3, [1, 1]])
         self.assertEqual(len(queue.queue), 3)
 
     def test_queue_add_more_values_than_maxLength(self):
@@ -61,15 +61,14 @@ class TestQueue(unittest.TestCase):
         queue.add(1)
         queue.add(2)
         queue.add(3)
-        self.assertEqual(queue.queue, [1,2,3])
+        self.assertEqual(queue.queue, [1, 2, 3])
         self.assertEqual(len(queue.queue), 3)
         queue.remove()
-        self.assertEqual(queue.queue, [2,3])
+        self.assertEqual(queue.queue, [2, 3])
         self.assertEqual(len(queue.queue), 2)
         queue.remove()
         self.assertEqual(queue.queue, [3])
         self.assertEqual(len(queue.queue), 1)
-
         queue = Queue(self.max_length)
         for i in range(self.max_length):
             queue.add(i)
@@ -99,7 +98,7 @@ class TestQueue(unittest.TestCase):
     def test_chian_add(self):
         queue = Queue(self.max_length)
         queue.add(1).add(2).add(3)
-        self.assertEqual(queue.queue, [1,2,3])
+        self.assertEqual(queue.queue, [1, 2, 3])
         self.assertEqual(len(queue.queue), 3)
 
     def test_chain_remove(self):

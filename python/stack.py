@@ -1,12 +1,11 @@
 class Stack:
-    
     def __init__(self, max_length=0):
         if type(max_length) != int or max_length < 0:
             raise Exception
         self.stack = []
         self.max_length = max_length
 
-    def add(self, obj):     
+    def add(self, obj):
         if self.max_length > len(self.stack):
             self.stack.append(obj)
         else:
