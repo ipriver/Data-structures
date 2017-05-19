@@ -41,6 +41,11 @@ describe('LinkedList', function(){
     beforeEach(function() {
       lili = new LinkedList();
     });
+    it('throws error if input is not a Node', function(){
+      expect(() => lili.addNode(1)).to.throw(MyException);
+      expect(() => lili.addNode('ssssss')).to.throw(MyException);
+      expect(() => lili.addNode([])).to.throw(MyException);
+    });
     it('addNode should correctly add Node into the list', function() {
       node = new Node(3);
       lili.addNode(node);
@@ -178,6 +183,18 @@ describe('LinkedList', function(){
         assert.equal(lili.tail, node);
       }
       expect(() => lili.deleteAtIndex(11)).to.throw(MyException);
+    });
+    it('if LL length is 1, then head and tail must be null after delete', function(){
+      lili.addNode(new Node(1));
+      lili.deleteAtIndex(0);
+      assert.equal(lili.length, 0);
+      assert.equal(lili.head, null);
+      assert.equal(lili.tail, null);
+      lili.addNode(new Node(1)).addNode(new Node(2));
+      lili.deleteAtIndex(0);
+      assert.equal(lili.length, 1);
+      assert.equal(lili.head.value, 2);
+      assert.equal(lili.tail.value, 2);
     });
     it('check that function deletes Nodes correctly', function() {
       lili.addNode(new Node(1)).addNode(new Node(2)).addNode(new Node(5));

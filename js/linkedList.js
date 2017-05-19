@@ -16,6 +16,7 @@ function LinkedList() {
 }
 
 LinkedList.prototype.addNode = function(node) {
+  if (!(node instanceof Node)) throw new MyException('input is not a Node');
   this.length += 1;
   if (!this.head) {
     this.head = node;
@@ -79,7 +80,7 @@ LinkedList.prototype.getNode = function(index, notSkip=true) {
 LinkedList.prototype.insertAtIndex = function(index, newNode) {
   if (!(newNode instanceof Node)) throw new MyException('input is not a Node');
   node = this.getNode(index, false);
-  if (node == null) {
+  if (node === null) {
     this.addNode(newNode);
     return this;
   } else if (this.head == node) {
@@ -97,6 +98,14 @@ LinkedList.prototype.insertAtIndex = function(index, newNode) {
 
 LinkedList.prototype.deleteAtIndex = function(index) {
   node = this.getNode(index);
+  if (index === 0) {
+    if (this.length == 1) {
+      this.head = null;
+      this.tail = null;
+    } else {
+      this.head = this.getNode(1);
+    }
+  }
   if (node.prev) node.prev.next = node.next;
   if (node.next) node.next.prev = node.prev;
   this.length -= 1;
@@ -110,4 +119,4 @@ module.exports = {
   Node: Node,
   LinkedList: LinkedList,
   MyException: MyException
-}
+};
