@@ -142,11 +142,18 @@ class TestLinkedList(unittest.TestCase):
             lili.get_node(times + 1)
 
     def test_LL_get_node_returns_correct_node(self):
+        global lili
         search_node = Node(99)
         (lili.add_node(Node(44)).add_node(Node(23)).add_node(search_node)
              .add_node(Node(9)))
         self.assertIsInstance(lili.get_node(2), Node)
         self.assertEqual(lili.get_node(2), search_node)
+        lili = LinkedList()
+        for i in range(7):
+            lili.add_node(Node(i))
+        lili.add_node(search_node)
+        self.assertEqual(lili.length, 8)
+        self.assertEqual(lili.get_node(7).value, search_node.value)
 
     def test_LL_get_node_random_test(self):
         my_rand = randint(5, 20)
@@ -158,6 +165,40 @@ class TestLinkedList(unittest.TestCase):
                 lili.add_node(Node(i))
         self.assertIsInstance(lili.get_node(my_rand - 1), Node)
         self.assertEqual(lili.get_node(my_rand - 1), search_node)
+
+    def test_LL_deleteAtIndex_raise_if_empty(self):
+        with self.assertRaises(Exception):
+            lili.delete_at_index(0)
+
+    def test_LL_deleteAtIndex_raise_if_index_is_bigger_then_length(self):
+        for i in range(1, times + 1):
+            lili.add_node(Node(i))
+        with self.assertRaises(Exception):
+            lili.delete_at_index(times + 1)
+
+    def test_LL_deleteAtIndex_deletes_correctly(self):
+        lili.add_node(Node(23))
+        lili.delete_at_index(0)
+        self.assertEqual(lili.length, 0)
+        self.assertEqual(lili.head, None)
+        self.assertEqual(lili.tail, None)
+        prev_node = Node(99)
+        del_node = Node(33)
+        next_node = Node(44)
+        lst = [prev_node, del_node, next_node]
+        for i in range(7):
+            lili.add_node(Node(i))
+        for i in lst:
+            lili.add_node(i)
+        for i in range(7):
+            lili.add_node(Node(i))
+        self.assertEqual(lili.length, 17)
+        lili.delete_at_index(8)
+        self.assertEqual(lili.length, 16)
+        self.assertEqual(lili.get_node(7).value, prev_node.value)
+        self.assertEqual(lili.get_node(7).next.value, next_node.value)
+        self.assertEqual(lili.get_node(8).value, next_node.value)
+        self.assertEqual(lili.get_node(8).prev.value, prev_node.value)
 
 if __name__ == '__main__':
     unittest.main()

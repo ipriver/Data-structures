@@ -71,5 +71,20 @@ class LinkedList:
     def insert_at_index(self):
         pass
 
-    def delete_at_index(self):
-        pass
+    def delete_at_index(self, index):
+        node = self.get_node(index)
+        if index == 0:
+            if self.length == 1:
+                self.tail = None
+                self.head = None
+            else:
+                self.head = self.get_node(1)
+        if node.prev:
+            node.prev.next = node.next
+        if node.next:
+            node.next.prev = node.prev
+        self.length -= 1
+        node.next = None
+        node.prev = None
+        node.value = None
+        return self
