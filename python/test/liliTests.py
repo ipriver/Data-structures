@@ -200,5 +200,42 @@ class TestLinkedList(unittest.TestCase):
         self.assertEqual(lili.get_node(8).value, next_node.value)
         self.assertEqual(lili.get_node(8).prev.value, prev_node.value)
 
+    def test_LL_insertAtIndex_raises_if_input_is_not_a_node(self):
+        with self.assertRaises(Exception):
+            lili.insert_at_index(0, 24)
+
+    def test_LL_isertAtIndex_raises_if_index_is_invalid(self):
+        for i in range(7):
+            lili.add_node(Node(i))
+        with self.assertRaises(Exception):
+            lili.insert_at_index(-11, Node(24))
+        with self.assertRaises(Exception):
+            lili.insert_at_index(999, Node(24))
+        lili.clean()
+        with self.assertRaises(Exception):
+            lili.insert_at_index(-11, Node(24))
+        with self.assertRaises(Exception):
+            lili.insert_at_index(999, Node(24))
+
+    def test_LL_insertAtIndex_works_correctly(self):
+        prev_node = Node(24)
+        next_node = Node(44)
+        lili.add_node(Node(1)).add_node(prev_node).add_node(next_node)
+        lili.insert_at_index(2, Node(88))
+        self.assertEqual(lili.get_node(2).value, 88)
+        self.assertEqual(lili.get_node(1).value, prev_node.value)
+        self.assertEqual(lili.get_node(1).next.value, 88)
+        self.assertEqual(lili.get_node(3).value, next_node.value)
+        self.assertEqual(lili.get_node(3).prev.value, 88)
+        self.assertEqual(lili.get_node(2).prev.value, prev_node.value)
+        self.assertEqual(lili.get_node(2).next.value, next_node.value)
+
+    def test_LL_insertAtIndex_is_chainable(self):
+        for i in range(7):
+            (lili.add_node(Node(i)).add_node(Node(i))
+                 .insert_at_index(1, Node(99)))
+        self.assertEqual(lili.length, 3 * 7)
+
+
 if __name__ == '__main__':
     unittest.main()

@@ -68,8 +68,26 @@ class LinkedList:
             node = node.next
         return node
 
-    def insert_at_index(self):
-        pass
+    def insert_at_index(self, index, new_node):
+        if 0 > index or index > self.length:
+            raise 'invalid index'
+        if not isinstance(new_node, Node):
+            raise 'input value is not a Node'
+        if not self.head or index == self.length:
+            self.add_node(new_node)
+            return self
+        node = self.get_node(index, False)
+        if self.head == node:
+            new_node.next = node
+            node.prev = new_node
+            self.head = new_node
+        else:
+            new_node.prev = node.prev
+            node.prev.next = new_node
+            node.prev = new_node
+            new_node.next = node
+        self.length += 1
+        return self
 
     def delete_at_index(self, index):
         node = self.get_node(index)
