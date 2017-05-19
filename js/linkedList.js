@@ -79,8 +79,9 @@ LinkedList.prototype.getNode = function(index, notSkip=true) {
 
 LinkedList.prototype.insertAtIndex = function(index, newNode) {
   if (!(newNode instanceof Node)) throw new MyException('input is not a Node');
+  if (0 > index || index > this.length) throw new MyException('invalid index');
   node = this.getNode(index, false);
-  if (node === null) {
+  if (node === null || this.length == index) {
     this.addNode(newNode);
     return this;
   } else if (this.head == node) {
@@ -88,6 +89,7 @@ LinkedList.prototype.insertAtIndex = function(index, newNode) {
     node.prev = newNode;
     this.head = newNode;
   } else {
+    newNode.prev = node.prev;
     node.prev.next = newNode;
     node.prev = newNode;
     newNode.next = node;
