@@ -19,6 +19,12 @@ class TestBubbleSort(unittest.TestCase):
                 lst.append(randint(-999, 999))
         self.assertEqual(bubbleSort(lst), sorted(lst))
 
+    def test_one_element_list(self):
+        lst.append(1)
+        self.assertEqual(bubbleSort(lst), sorted(lst))
+
+    def test_empty_list(self):
+        self.assertEqual(bubbleSort(lst), sorted(lst))
 
 if __name__ == '__main__':
     unittest.main()
