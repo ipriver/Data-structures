@@ -76,7 +76,7 @@ class TestStack(unittest.TestCase):
         self.assertEqual(len(stack.stack), self.max_length)
         for i in range(1, self.max_length + 1):
             stack.remove()
-            self.assertEqual(len(stack.stack), self.max_length-i)
+            self.assertEqual(len(stack.stack), self.max_length - i)
 
     def test_remove_more_elements_than_maxLength(self):
         stack = Stack(self.max_length)

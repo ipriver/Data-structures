@@ -14,7 +14,7 @@ class Stack:
 
     def remove(self):
         try:
-            self.stack.pop(len(self.stack)-1)
+            self.stack.pop(len(self.stack) - 1)
         except IndexError:
             print('Cannot remove element from stack - Stack is empty')
         return self

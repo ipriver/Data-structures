@@ -75,7 +75,7 @@ class TestQueue(unittest.TestCase):
         self.assertEqual(len(queue.queue), self.max_length)
         for i in range(1, self.max_length + 1):
             queue.remove()
-            self.assertEqual(len(queue.queue), self.max_length-i)
+            self.assertEqual(len(queue.queue), self.max_length - i)
 
     def test_remove_more_elements_than_maxLength(self):
         queue = Queue(self.max_length)

@@ -94,7 +94,7 @@ class TestLinkedList(unittest.TestCase):
             lili.add_node(Node(i))
         for i in range(1, times + 1):
             lili.remove_last()
-            self.assertEqual(lili.length, times-i)
+            self.assertEqual(lili.length, times - i)
         self.assertEqual(lili.length, 0)
         self.assertEqual(lili.head, None)
         self.assertEqual(lili.tail, None)
