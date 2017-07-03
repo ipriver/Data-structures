@@ -9,12 +9,6 @@ type Queue struct {
 	maxLength int
 }
 
-type Qinter interface {
-	addLast(value int) []int
-	removeFirst() []int
-	cleanQueue() []int
-}
-
 func (q *Queue) addLast(value int) []int {
 	if len(q.queue) < q.maxLength {
 		q.queue = append(q.queue, value)
