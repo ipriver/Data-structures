@@ -15,5 +15,5 @@ python3 RunAllTests.py
 ```
 Golang is using package "testing", use command below to run _test.go file tests:
 ```console
-go test example_test.go
+go test testfile.go testfile_test.go
 ```
