@@ -15,7 +15,7 @@ type InterStack interface {
 	CleanStack() []int
 }
 
-func (s *Stack) addLast(value int) []int {
+func (s *Stack) AddLast(value int) []int {
 	if len(s.stack) < s.maxLength {
 		s.stack = append(s.stack, value)
 	} else {
@@ -24,7 +24,7 @@ func (s *Stack) addLast(value int) []int {
 	return s.stack
 }
 
-func (s *Stack) removeLast() []int {
+func (s *Stack) RemoveLast() []int {
 	if len(s.stack) > 0 {
 		s.stack = s.stack[:len(s.stack)-1]
 	} else {
