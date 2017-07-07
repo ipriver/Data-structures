@@ -39,7 +39,7 @@ func TestStackAddFunc(t *testing.T) {
 	}
 }
 
-func TestStackRemoveLast(t *testing.T) {
+func TestStackRemoveFirst(t *testing.T) {
 	var arr []int
 	var maxLength int = 10
 	var st = Stack{arr, maxLength}
