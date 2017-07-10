@@ -97,6 +97,8 @@ class LinkedList:
                 self.head = None
             else:
                 self.head = self.get_node(1)
+        if index == self.length:
+            self.tail = self.tail.prev
         if node.prev:
             node.prev.next = node.next
         if node.next:
