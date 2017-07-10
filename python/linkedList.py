@@ -69,7 +69,7 @@ class LinkedList:
         return node
 
     def insert_at_index(self, index, new_node):
-        if 0 > index or index > self.length:
+        if 0 > index or index > self.length - 1:
             raise 'invalid index'
         if not isinstance(new_node, Node):
             raise 'input value is not a Node'
