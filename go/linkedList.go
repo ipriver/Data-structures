@@ -21,7 +21,7 @@ type LLInter interface {
 	RemoveLast() *LinkedList
 	CleanList() *LinkedList
 	GetNode(index int) *Node
-	InsertAtIndex(index int, newNode Node) *LinkedList
+	InsertAtIndex(index int, newNode *Node) *LinkedList
 	DeleteAtIndex(index int) *LinkedList
 }
 
@@ -84,10 +84,61 @@ func (ll *LinkedList) GetNode(index int) *Node {
 	}
 }
 
-func (ll *LinkedList) InsertAtIndex(index int, newNode Node) *LinkedList {
+func (ll *LinkedList) InsertAtIndex(index int, newNode *Node) *LinkedList {
+	if index < 0 || index > ll.length-1 {
+		fmt.Println("incorrect index")
+		return nil
+	}
+	if ll.head == nil || index == ll.length {
+		ll.AddNode(newNode)
+	}
+	node := ll.GetNode(index)
+	if ll.head == node {
+		newNode.next = node
+		node.prev = newNode
+		ll.head = newNode
+	} else {
+		newNode.prev = node.prev
+		node.prev.next = newNode
+		node.prev = newNode
+		newNode.next = node
+	}
+	ll.length += 1
 	return ll
 }
 
 func (ll *LinkedList) DeleteAtIndex(index int) *LinkedList {
+	node := ll.GetNode(index)
+	if node == nil {
+		return nil
+	}
+	if index == 0 {
+		if ll.length == 0 {
+			fmt.Println("Linked list is already empty")
+			return ll
+		}
+		if ll.length == 1 {
+			ll.head.next = nil
+			ll.tail.prev = nil
+			ll.tail = nil
+			ll.head = nil
+		} else {
+			ll.head = ll.GetNode(1)
+			ll.head.prev = nil
+		}
+	}
+	if ll.length == index+1 {
+		ll.tail = ll.tail.prev
+	}
+	if node.prev != nil {
+		node.prev.next = node.next
+	}
+	if node.next != nil {
+		node.next.prev = node.prev
+	}
+	node.next = nil
+	node.prev = nil
+	node.value = nil
+	ll.length -= 1
 	return ll
 }
