@@ -81,3 +81,8 @@ MSet.prototype.subset = function(secSet) {
   }
   return count == this.length() ? true : false;
 };
+
+
+module.exports = {
+  MSet: MSet,
+};
