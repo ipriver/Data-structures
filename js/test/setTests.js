@@ -57,11 +57,14 @@ describe('Set', function(){
         for (var j=0; j<leArr; j++) {
           var value = Math.floor(Math.random() * (1000 - 1 + 1)) + 1;
           se.add(value);
+          if ((Math.floor(Math.random() * (10 - 1 + 1)) + 1) == 1) {
+            arr.push(value);
+          }
           arr.push(value);
         }
-        var index = Math.floor(Math.random() * ((leArr-1) - 1 + 1)) + 1;
         var randNegative = Math.floor(Math.random() * (-1000 - (-11) + 1)) - 11;
-        assert.equal(se.has(arr[index]), true);
+        var randIndex = Math.floor(Math.random() * (arr.length-1) - 1 + 1) + 1;
+        assert.equal(se.has(arr[randIndex]), true);
         assert.equal(se.has(randNegative), false);
       }
     });  
@@ -146,18 +149,119 @@ describe('Set', function(){
           }
           return union;
         }
-        
+
         assert.deepEqual(se.union(se2).values(), Array.from(setES.union(setES2)));
       }
     });
   });
   describe('#Set intersection()', function() {
-    it('', function() {});
+    it('function returns intersection of sets', function() {
+
+      Set.prototype.intersection = function(setB) {
+      var intersection = new Set();
+      for (var elem of setB) {
+          if (this.has(elem)) {
+              intersection.add(elem);
+          }
+      }
+      return intersection;
+      
+      var times = Math.floor(Math.random() * (10 - 1 + 1)) + 1;
+      for (var i=0; i<times; i++) {
+        var se = new MSet();
+        var se2 = new MSet();
+        var setES = new Set();
+        var setES2 = new Set();
+        var nElem = Math.floor(Math.random() * (1000 - 100 + 1)) + 100;
+        for (var i=0; i<nElem; i++) {
+          var value = Math.floor(Math.random() * (1000 - 1 + 1)) + 1;
+          var value2 = Math.floor(Math.random() * (1000 - 1 + 1)) + 1;
+          se.add(value);
+          se2.add(value);
+          setES.add(value);
+          setES2.add(value);
+        }
+        assert.deepEqual(se.values(), Array.from(setES.values()));
+        assert.deepEqual(se2.values(), Array.from(setES2.values()));
+        assert.deepEqual(se.intersection(se2).values(), Array.from(setES.intersection(setES2)));
+      }
+}
+    });
   });
   describe('#Set difference()', function() {
-    it('', function() {});
+    it('function returns difference between 2 sets', function() {
+
+      Set.prototype.difference = function(setB) {
+        var difference = new Set(this);
+        for (var elem of setB) {
+            difference.delete(elem);
+        }
+        return difference;
+      }
+
+      var times = Math.floor(Math.random() * (10 - 1 + 1)) + 1;
+      for (var i=0; i<times; i++) {
+        var se = new MSet();
+        var se2 = new MSet();
+        var setES = new Set();
+        var setES2 = new Set();
+        var nElem = Math.floor(Math.random() * (1000 - 100 + 1)) + 100;
+        for (var i=0; i<nElem; i++) {
+          var value = Math.floor(Math.random() * (1000 - 1 + 1)) + 1;
+          var value2 = Math.floor(Math.random() * (1000 - 1 + 1)) + 1;
+          se.add(value);
+          se2.add(value);
+          setES.add(value);
+          setES2.add(value);
+        }
+        assert.deepEqual(se.values(), Array.from(setES.values()));
+        assert.deepEqual(se2.values(), Array.from(setES2.values()));
+        assert.deepEqual(se.difference(se2).values(), Array.from(setES.difference(setES2)));
+      }
+    });
   });
   describe('#Set subset()', function() {
-    it('', function() {});
+    it('function returns true or false if set is a subset', function() {
+
+      Set.prototype.isSuperset = function(subset) {
+        for (var elem of subset) {
+            if (!this.has(elem)) {
+                return false;
+            }
+        }
+        return true;
+      }
+      
+      var times = Math.floor(Math.random() * (10 - 1 + 1)) + 1;
+      for (var i=0; i<times; i++) {
+        var se = new MSet();
+        var se2 = new MSet();
+        var setES = new Set();
+        var setES2 = new Set();
+        var nElem = Math.floor(Math.random() * (1000 - 100 + 1)) + 100;
+        for (var i=0; i<nElem; i++) {
+          var value = Math.floor(Math.random() * (1000 - 1 + 1)) + 1;
+          var value2 = Math.floor(Math.random() * (1000 - 1 + 1)) + 1;
+          se.add(value);
+          se2.add(value);
+          setES.add(value);
+          setES2.add(value);
+        }
+        assert.deepEqual(se.values(), Array.from(setES.values()));
+        assert.deepEqual(se2.values(), Array.from(setES2.values()));
+        assert.equal(se.subset(se2), setES2.isSuperset(setES));
+      }
+
+      se = new MSet();
+      se2 = new MSet();
+      setES = new Set();
+      setES2 = new Set();
+      se.add(1).add(2).add(3);
+      se2.add(1).add(2).add(3).add(4).add(5);
+      setES.add(1).add(2).add(3);
+      setES2.add(1).add(2).add(3).add(4).add(5);
+      assert.equal(se.subset(se2), setES2.isSuperset(setES));
+      assert.equal(se2.subset(se), setES.isSuperset(setES2));
+    });
   });
 });
