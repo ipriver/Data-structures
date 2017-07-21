@@ -37,13 +37,13 @@ describe('Set', function(){
       for (var i=0; i<times; i++) {
         var se = new MSet();
         var leArr = Math.floor(Math.random() * (10 - 1 + 1)) + 1;
-        var arr = [];
+        var setES = new Set();
         for (var j=0; j<leArr; j++) {
           var value = Math.floor(Math.random() * (1000 - 1 + 1)) + 1;
           se.add(value);
-          arr.push(value);
+          setES.add(value);
         }
-        assert.deepEqual(se.values(), arr);
+        assert.deepEqual(se.values(), Array.from(setES.values()));
       }  
     });
   });
@@ -68,18 +68,96 @@ describe('Set', function(){
   });
   describe('#Set length()', function() {
     it('should return length of MSet.collection', function() {
-    var times = Math.floor(Math.random() * (10 - 1 + 1)) + 1;
-    for (var i=0; i<times; i++) {
+      var times = Math.floor(Math.random() * (10 - 1 + 1)) + 1;
+      for (var i=0; i<times; i++) {
+        var se = new MSet();
+        var setES = new Set();
+        var leArr = Math.floor(Math.random() * (100 - 1 + 1)) + 1;
+        for (var j=0; j<leArr; j++) {
+            var value = Math.floor(Math.random() * (1000 - 1 + 1)) + 1;
+            se.add(value);
+            setES.add(value);
+        }
+        assert.equal(se.length(), setES.size);
+      }  
+    });
+  });
+  describe('#Set add()', function() {
+    it('function add should add elements into the MSet', function() {
+      var times = Math.floor(Math.random() * (10 - 1 + 1)) + 1;
+      for (var i=0; i<times; i++) {
+        var se = new MSet();
+        var setES = new Set();
+        var leArr = Math.floor(Math.random() * (100 - 1 + 1)) + 1;
+        for (var j=0; j<leArr; j++) {
+            var value = Math.floor(Math.random() * (1000 - 1 + 1)) + 1;
+            se.add(value);
+            setES.add(value);
+        }
+        assert.deepEqual(se.values(), Array.from(setES.values()));
+      }  
+    });
+  });
+  describe('#Set del()', function() {
+    it('function del should remove elemet from MSet', function() {
+      var times = Math.floor(Math.random() * (1000 - 10 + 1)) + 10;
       var se = new MSet();
       var setES = new Set();
-      var leArr = Math.floor(Math.random() * (100 - 1 + 1)) + 1;
-      for (var j=0; j<leArr; j++) {
-          var value = Math.floor(Math.random() * (1000 - 1 + 1)) + 1;
-          se.add(value);
-          setES.add(value);
+      for (var i=0; i<times; i++) {
+        var value = Math.floor(Math.random() * (1000 - 1 + 1)) + 1;
+        se.add(value);
+        setES.add(value);
       }
-      assert.equal(se.length(), setES.size);
-    }  
+      var ntimes = Math.floor(Math.random() * (100 - 10 + 1)) + 10;
+      for (var i=0; i<ntimes; i++) {
+        assert.deepEqual(se.values(), Array.from(setES.values()));
+        var delVal = Array.from(setES.values())[times-1];
+        if (!se.has(delVal)) { continue; }
+        se.del(delVal);
+        setES.delete(delVal)
+        assert.deepEqual(se.values(), Array.from(setES.values()));
+      }
     });
+  });
+  describe('#Set union()', function() {
+    it('function should union sets correclty', function() {
+      var times = Math.floor(Math.random() * (10 - 1 + 1)) + 1;
+      for (var i=0; i<times; i++) {
+        var se = new MSet();
+        var se2 = new MSet();
+        var setES = new Set();
+        var setES2 = new Set();
+        var nElem = Math.floor(Math.random() * (1000 - 100 + 1)) + 100;
+        for (var i=0; i<nElem; i++) {
+          var value = Math.floor(Math.random() * (1000 - 1 + 1)) + 1;
+          var value2 = Math.floor(Math.random() * (1000 - 1 + 1)) + 1;
+          se.add(value);
+          se2.add(value);
+          setES.add(value);
+          setES2.add(value);
+        }
+        assert.deepEqual(se.values(), Array.from(setES.values()));
+        assert.deepEqual(se2.values(), Array.from(setES2.values()));
+
+        Set.prototype.union = function(setB) {
+          var union = new Set(this);
+          for (var elem of setB) {
+            union.add(elem);
+          }
+          return union;
+        }
+        
+        assert.deepEqual(se.union(se2).values(), Array.from(setES.union(setES2)));
+      }
+    });
+  });
+  describe('#Set intersection()', function() {
+    it('', function() {});
+  });
+  describe('#Set difference()', function() {
+    it('', function() {});
+  });
+  describe('#Set subset()', function() {
+    it('', function() {});
   });
 });
